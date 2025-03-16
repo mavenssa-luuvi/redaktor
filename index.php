@@ -3,6 +3,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $action = $_GET['action'] ?? 'index';
 
 switch ($action) {
@@ -25,15 +29,16 @@ switch ($action) {
 
     // Zeszyty:
     case 'notebooks':
-        case 'addNotebook':
-            require_once 'controllers/NotebookController.php';
-            call_user_func([(new NotebookController), str_replace('Notebook', '', $action)]);
-            break;    
+    case 'addNotebook':
+        require_once 'controllers/NotebookController.php';
+        $method = ($action == 'addNotebook') ? 'add' : 'index';
+        call_user_func([(new NotebookController), $method]);
+        break;
 
     // Notatki:
-    case 'add': // Obsługa dodawania notatek
-    case 'edit': // Obsługa edytowania notatek
-    case 'delete': // Obsługa usuwania notatek
+    case 'add':
+    case 'edit':
+    case 'delete':
         require_once 'controllers/NoteController.php';
         call_user_func([(new NoteController), $action]);
         break;

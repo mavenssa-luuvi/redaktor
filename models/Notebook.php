@@ -14,9 +14,12 @@ class Notebook {
         try {
             $pdo = Database::connect();
             $stmt = $pdo->prepare("INSERT INTO notebooks (name, user_id) VALUES (?, ?)");
-            return $stmt->execute([$name, $user_id]);
+            $stmt->execute([$name, $user_id]);
+            return true;
         } catch (PDOException $e) {
-            return false;
+            echo "Błąd PDO: " . $e->getMessage();
+            exit;
         }
     }
+    
 }

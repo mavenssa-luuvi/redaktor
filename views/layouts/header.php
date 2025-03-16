@@ -26,6 +26,9 @@
           <a class="nav-link"  href="index.php">Moje notatki</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link"  href="index.php?action=notebooks">Moje zeszyty</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="index.php?action=logout">Wyloguj się</a>
         </li>
       </ul>

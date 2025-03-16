@@ -2,6 +2,10 @@
 
 <h2>Dodaj nową Notatkę</h2>
 
+<?php if (!empty($error)): ?>
+    <div class="error"><?= htmlspecialchars($error) ?></div>
+<?php endif; ?>
+
 <form action="index.php?action=add" method="post">
     <label for="title">Tytuł:</label>
     <input type="text" name="title" id="title" required>
@@ -11,6 +15,7 @@
 
     <label for="notebook">Zeszyt:</label>
     <select name="notebook" id="notebook" required>
+        <option value="">-- Wybierz zeszyt --</option>
         <?php foreach ($notebooks as $notebook): ?>
             <option value="<?= htmlspecialchars($notebook['id']) ?>">
                 <?= htmlspecialchars($notebook['name']) ?>
