@@ -21,5 +21,22 @@ class Notebook {
             exit;
         }
     }
+    public static function getAllWithNotes($user_id) {
+        $pdo = Database::connect();
+
+        // Pobierz zeszyty
+        $stmt = $pdo->prepare("SELECT * FROM notebooks WHERE user_id = ? ORDER BY name ASC");
+        $stmt->execute([$user_id]);
+        $notebooks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Pobierz notatki dla każdego zeszytu
+        foreach ($notebooks as &$notebook) {
+            $stmt = $pdo->prepare("SELECT * FROM notes WHERE notebook_id = ? AND user_id = ? ORDER BY created_at DESC");
+            $stmt->execute([$notebook['id'], $user_id]);
+            $notebook['notes'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return $notebooks;
+    }
     
 }
